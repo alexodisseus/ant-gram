@@ -18,3 +18,5 @@ def create_app():
     tnp.configure(app)
     admin.configure(app)
     return app
+
+application = create_app()
