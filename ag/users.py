@@ -35,22 +35,25 @@ def login():
 	return render_template('login.html' , login = False)
 @bp.route("/arquivos", methods=["GET"])
 def lista_arquivos():
-	DIRETORIO="./"
+	DIRETORIO="/"
 	arquivos = []
 
 	for nome_do_arquivo in os.listdir(DIRETORIO):
 		endereco_do_arquivo = os.path.join(DIRETORIO, nome_do_arquivo)
 		
 		arquivos.append(nome_do_arquivo)
+
+	#asd = send_from_directory(DIRETORIO,"style.css", as_attachment=True)
+
 			
-	return jsonify(arquivos)
+	return arquivos
 
 @bp.route('/bbb', methods = ['GET'])
 def baixa():			
-	diretorio = "../.."+url_for('static', filename ='css/')
-	#return send_from_directory(diretorio,"database.db", as_attachment=True)
-	return send_from_directory(diretorio,"style.css")
-	return diretorio
+	diretorio ='./donaclotilde/' 
+	return send_from_directory(diretorio,"database.db", as_attachment=True)
+	#return send_from_directory(diretorio,"style.css")
+	#return diretorio
 
 
 @bp.route('/validate',methods=['POST'])
