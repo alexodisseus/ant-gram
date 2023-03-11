@@ -201,7 +201,7 @@ def insert_tnp():
 
 	asd.save_tnp(dados,colunas)
 
-	return render_template('incluido.html')
+	return render_template('tnp/tnp_incluido.html')
 
 
 
