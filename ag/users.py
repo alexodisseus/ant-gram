@@ -1,6 +1,7 @@
+import os
 import ag.app
 
-from flask import Blueprint, render_template, current_app , request , session, redirect, url_for
+from flask import Blueprint, jsonify, render_template, current_app , request , session, redirect, url_for, send_from_directory
 
 from donaclotilde.model import Model
 
@@ -32,7 +33,24 @@ def login():
 			return render_template('login.html' , login =True)
 		
 	return render_template('login.html' , login = False)
-	
+@bp.route("/arquivos", methods=["GET"])
+def lista_arquivos():
+	DIRETORIO="./"
+	arquivos = []
+
+	for nome_do_arquivo in os.listdir(DIRETORIO):
+		endereco_do_arquivo = os.path.join(DIRETORIO, nome_do_arquivo)
+		
+		arquivos.append(nome_do_arquivo)
+			
+	return jsonify(arquivos)
+
+@bp.route('/bbb', methods = ['GET'])
+def baixa():			
+	diretorio = "../.."+url_for('static', filename ='css/')
+	#return send_from_directory(diretorio,"database.db", as_attachment=True)
+	return send_from_directory(diretorio,"style.css")
+	return diretorio
 
 
 @bp.route('/validate',methods=['POST'])
