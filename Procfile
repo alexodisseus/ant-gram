@@ -1,1 +1,1 @@
-web: gunicorn 'app:hello_world()'
+web: gunicorn 'ag.app:create_app()'

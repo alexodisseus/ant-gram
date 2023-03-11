@@ -1,0 +1,41 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Termo</th>
+      <th scope="col">Empresa</th>
+      <th scope="col">Data</th>
+      <th scope="col">Infração</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody >
+{%if data!=[]:%}
+  {%for x in data:%}
+
+    <tr>
+      <th scope="row">{{x[0]}}</th>
+      <td>{{x[1]}}</td>
+      <td>{{x[2]}}</td>
+      <td>{{x[3]}}</td>
+      <td>{{x[4]}}</td>
+    </tr>
+    {%endfor%}
+
+    {%else%}
+    
+      <td>sem resultados</td>
+  
+    {%endif%}
+        
+        
+      </tbody>
+    </table>  
+
+{%if pag!=[]:%}
+
+  <p class="card-text text-center">Mostrando <span id="mostrando">{{pag[0][1]+10 if pag[0][1] else 10}}</span> de {{pag[0][0]}}, clique abaixo para caregar mais ou use os filtros</p>
+  
+{%else%}
+  
+{%endif%}
+<br>

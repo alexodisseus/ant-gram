@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <link rel="stylesheet"  href="{{url_for('static', filename ='css/style.css')}}"> 
+  <title>Termos de Notificação de Penalidade</title>
+</head>
+<body>
+
+
+<div>
+<nav class="navbar navbar-expand-lg bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand text-light" href="#">
+      <img src={{url_for('static', filename ='img/logo_mini.png')}} alt="Logo_ceagesp" width="130" height="34">
+      
+    </a>
+    
+    <div class="collapse  navbar-collapse " id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto me-2  mb-lg-0">
+       
+        <li class="nav-item ">
+          
+        </li>
+      </ul>
+      <div>
+        
+        <ul class="list-group">
+          <li class="list-group-item">{{session['username'][0]}}</li>
+
+        </ul>
+      </div>
+      <div>
+        <ul class="list-group">
+          <li class="list-group-item"><a class="nav-link" href='/tnp/logout'>Sair</a></li>
+        
+        </ul>
+      </div>
+      
+      
+    </div>
+  </div>
+</nav>  
+</div>
+
+<!-- body da aplicação-->
+
+<div class="container-fluid">
+  <div class="row justify-content-md-center">
+    
+
+    <!-- parte central-->
+    <div class="col-md-8 ">
+      <br>
+      <h3 class="text-center">Termo de Notificação de Penalidade - Nº {{data[0][0]}}</h3>
+
+
+      
+      <div class="container">
+        <div class="mb-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="ms-2 me-auto">Empresa: {{data[0][1]}}</div>
+              <div class="ms-2 me-auto">Local: {{data[0][2]}}</div>
+              
+              
+              <div class="row ms-2 me-auto pt-2 border-top">
+                <div class="col-md-2">
+                  <span class="badge text-bg-success">{{data[0][3]}}</span>
+                </div>
+                <div class="col-md-10">
+                  <div class="ms-2 me-auto">{{infracao[0][0]}}</div>
+                </div>
+              </div>
+              <div class="ms-2 me-auto pt-2 border-top">Data: {{data[0][4]}}</div>
+              <div class="ms-2 me-auto">Hora: {{data[0][5]}}</div>
+              <div class="ms-2 me-auto">Local infração: {{data[0][6]}}</div>
+              <div class="ms-2 me-auto">Observação: {{data[0][7]}}</div>
+              <div class="ms-2 me-auto">Fiscal: {{data[0][8]}}</div>
+              
+            </div>
+          </div>
+          <br>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Histórico da Empresa</h5>
+              <!--modificar para exibir histórico da empresa-->
+              <ol class="list-group list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    
+                  <div class="ms-2 me-auto">
+                    <div class="fw-bold">
+                      <a href="/tnp/ver/{{data[0][0]}}">
+                        <span class="badge bg-success">
+                          {{data[0][0]}}
+                        </span>
+                      </a> 
+                      - {{data[0][3]}}
+                    </div>
+                    {{data[0][4]}}
+  
+                  </div>
+                
+                </li>
+
+              </ol>
+              
+              
+            </div>
+          </div>
+        </div>
+          
+      </div>
+    
+      
+      
+
+
+    
+
+    </div>
+
+    
+  </div>
+</div>
+
+
+
+</body>
+<script src="{{url_for('static', filename ='js/index.js')}}"></script>
+</html>
+
+

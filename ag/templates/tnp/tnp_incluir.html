@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <link rel="stylesheet"  href="{{url_for('static', filename ='css/style.css')}}"> 
+
+  <title>Flask DC</title>
+</head>
+  <body>
+    <div class="container">
+      <div class="row dist-login">
+        <div class="card col-md-8 mx-auto">
+          <div class="row">
+
+            <div class="col-md-12">
+              <div class="card-body">
+
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active"   id="empresa" role="tabpanel" aria-labelledby="home-tab">
+                    <form action="insert_tnp" method="post">
+                    <h2>Indique os Dados da Empresa</h2>
+                    <br>
+                    <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Nome</label>
+                      <input name="input_busca_empresa" id="input_busca_empresa" oninput="busca_empresa()" class="form-control"    required>
+                      <div id="select_empresas" class="form-text">
+                        
+                      aqui lista
+                      </div>
+                    </div>
+                    <div class="mb-3" onchange="abilitar_proximo_empresa(this)">
+                      <label for="exampleInputPassword1"
+                       class="form-label">Selecione a Localização</label>
+                      
+                      <select name="select_local" id="select_local" class="form-select form-select mb-3" required>
+                        <option>Selecione a empresa</option>
+                      </select>
+                    </div>
+                    
+                     
+                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                      <button type="button" id="bt_proximo_empresa"  class="btn btn-primary  text-end"  onclick="proximo_empresa()" disabled>Próxima </button>
+
+                    </div>
+                  </div>
+                  <div class="tab-pane fade"  id="infracao" role="tabpanel" aria-labelledby="profile-tab">
+                    <h2>Indique a infração</h2>
+                    <br>
+                    <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Busque a descrição</label>
+                      <input name="input_busca_infracao" id="input_busca_infracao" oninput="busca_infracao()" class="form-control" required>
+                      <div id="select_infracao" class="form-text">
+                        
+                      </div>
+                    </div>
+                    <div class="mb-3" onchange="abilitar_proximo_empresa(this)">
+                      <label
+                       class="form-label">Descrição da Norma</label>
+
+                      <div class="vstack gap-3">
+                        <div id="descricao" class="bg-light border">Selecione o item da norma.</div>
+                       </div>  
+                      
+                    </div>
+                    
+                     
+                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                      <button type="button" id="bt_volta_empresa" class="btn btn-primary" onclick="volta_infracao()" >Voltar</button>  
+                      <button type="button" id="bt_proximo_infracao" class="btn btn-primary" onclick="proximo_infracao()" disabled>Próxima</button>  
+
+                    </div>
+                    
+
+                     
+                  </div>
+                  <div class="tab-pane fade " id="local" role="tabpanel" aria-labelledby="contact-tab">
+                    <h2>Dados complementares</h2>
+                    <br>
+                    <div class="mb-3">
+                      <label class="form-label">Local da infração</label>
+                      <input name="input_local_infracao" id="input_local_infracao" placeholder="Ex. rua 5" class="form-control" >
+                      <div id="emailHelp" class="form-text">Deixe em branco para usar a área da empresa</div>
+
+                      <div id="select_infracao" class="form-text">
+                        
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <div class="row">
+                        <div class="col">
+  
+                          <label  class="form-label">
+                            Data
+                          </label>
+                          <input id="data" type="text" oninput="input_horadata_local()" name="data" class="form-control" value="{{data_hoje}}" required>
+                        </div>
+                        <div class="col">
+                          <label for="exampleInputEmail1" class="form-label">
+                            Hora
+                          </label>
+                          
+
+                          <input id="hora" name="hora" oninput="input_horadata_local()" type="text" class="form-control "required>
+                        </div>
+                      </div>
+                      
+                      <br>
+                      <div class="mb-3">
+                        <label class="form-label">Observação</label>
+                        <textarea class="form-control" name="observacao" id="observacao" rows="3"></textarea>
+                      </div>
+                    </div>
+
+                    
+                     
+                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                      <button type="button" class="btn btn-primary" onclick="volta_local()">Voltar</button>
+                      <button type="button" id="bt_proximo_local" class="btn btn-primary" onclick="proximo_local()" disabled>Próxima</button>
+                  </div>
+                    </div>
+                    
+                    
+
+                  <div class="tab-pane fade " id="final" role="tabpanel" aria-labelledby="contact-tab">
+                    <h2>Confira informações</h2>
+                    <br>
+                    
+                      <div class="mb-3">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label class="form-label">Empresa </label>
+                          </div>
+                          <div class="col-md-9">
+                            <input id="conf_empresa" type="text" class="form-control" value="canelas">
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div class="mb-3">
+
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label class="col-form-label">Localizada </label>
+                          </div>
+
+                          <div class="col-md-9">
+                            <input id="conf_local_empresa" type="text" class="form-control" value="AP - B Box 12">
+                          </div>
+                        </div>
+                      </div>  
+                      <div class="mb-3 pt-2 border-top">
+
+                        <div class="col-md-12 row" >
+                          <div class="col-md-4">
+                            <span id="conf_infracao" class="badge text-bg-success">Erro</span>
+                          </div>
+                          <div class="col-md-8">
+                            <p id="conf_desc_infracao">Volte e selecione a infração</p>
+
+                          </div>
+  
+                        </div>
+                        
+                      </div>
+                      <div class="mb-3 pt-2 border-top">
+                        <br>  
+                        
+                        
+                        <div class="row">
+                          <div class="col-md-2">
+                            <label class="col-form-label">Local:</label>
+                          </div>
+                          <div class="col-md-10">
+                            <input id="conf_local_infracao" type="text" class="form-control" value="12/12/22">
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                        
+                          <div class="col-md-2">
+                            <label class="col-form-label">Data:</label>
+                          </div>
+                          <div class="col-md-4">
+                            <input id="conf_data" type="text"  class="form-control" value="12/12/22">
+                          </div>
+                          <div class="col-md-2">
+                            <label class="col-form-label">Hora:</label>
+                          </div>
+
+                          <div class="col-md-4">
+                            <input id="conf_hora" type="text" class="form-control" value="12:00">
+                          </div>
+
+                        </div>
+                        <br>
+                        <div class="col-md-12 row" >
+                          
+                          <div class="col-md-4">
+                            <label class="col-form-label">Observação:</label>
+                          </div>
+                          <div class="col-md-8">
+                            <label id="conf_observacao" class="col-form-label">
+                            deposito de caixas na rua 9</label>
+
+                          </div>
+  
+                        </div>
+                      </div>
+                      
+                      <div class="d-grid gap-2 mt-2 pt-2 border-top d-md-flex justify-content-md-end">
+                        <button onclick="volta_conferencia()" type="button" class="btn btn-primary" >Voltar</button>
+                        <button  type="submit" class="btn btn-primary" >Enviar</button>
+                      </div>
+                        
+                    </form>
+                    
+                    
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>  
+    </div>
+
+    
+  </body>
+
+</html>
+<script src="{{url_for('static', filename ='js/index.js')}}"></script>
+
+<script>
+
+function carrega_conferencia(){
+    
+  empresa = document.getElementById('input_busca_empresa').value;
+  local_empresa = document.getElementById('select_local').value;
+  infracao = document.getElementById('input_busca_infracao').value;
+  desc_infracao = document.getElementById('descricao').innerHTML;
+  local_infracao = document.getElementById('input_local_infracao').value;
+  data = document.getElementById('data').value;
+  hora = document.getElementById('hora').value;
+  observacao = document.getElementById('observacao').value;
+
+
+
+  document.getElementById('conf_empresa').value = empresa;
+  document.getElementById('conf_local_empresa').value = local_empresa;
+  document.getElementById('conf_infracao').innerHTML = infracao;
+  document.getElementById('conf_desc_infracao').innerHTML = desc_infracao;
+  document.getElementById('conf_local_infracao').value = local_infracao;
+  document.getElementById('conf_data').value = data;
+  document.getElementById('conf_hora').value = hora;
+  document.getElementById('conf_observacao').innerHTML = observacao;
+
+}
+
+function proximo_empresa(element){
+
+ document.getElementById('empresa').classList.remove("show");
+ document.getElementById('empresa').classList.remove("active");
+ document.getElementById('infracao').classList.add("show");
+ document.getElementById('infracao').classList.add("active");
+
+
+}
+function proximo_infracao(element){
+
+ document.getElementById('infracao').classList.remove("show");
+ document.getElementById('infracao').classList.remove("active");
+ document.getElementById('local').classList.add("show");
+ document.getElementById('local').classList.add("active");
+}
+function volta_infracao(element){
+
+document.getElementById('infracao').classList.remove("show");
+document.getElementById('infracao').classList.remove("active");
+document.getElementById('empresa').classList.add("show");
+document.getElementById('empresa').classList.add("active");
+}
+
+function proximo_local(element){
+
+ document.getElementById('local').classList.remove("show");
+ document.getElementById('local').classList.remove("active");
+ document.getElementById('final').classList.add("show");
+ document.getElementById('final').classList.add("active");
+carrega_conferencia();
+}
+
+function volta_local(element){
+
+document.getElementById('local').classList.remove("show");
+document.getElementById('local').classList.remove("active");
+document.getElementById('infracao').classList.add("show");
+document.getElementById('infracao').classList.add("active");
+}
+
+
+
+function volta_conferencia(element){
+
+document.getElementById('final').classList.remove("show");
+document.getElementById('final').classList.remove("active");
+document.getElementById('local').classList.add("show");
+document.getElementById('local').classList.add("active");
+
+}
+
+
+
+
+function busca_empresa(element){
+
+  var busca = document.getElementById('input_busca_empresa').value;
+
+  if (busca.length > 2 ){
+    var xmlhttp=new XMLHttpRequest();
+    xmlhttp.onreadystatechange=function() {
+      document.getElementById('select_empresas').innerHTML = this.responseText;
+    }
+
+    xmlhttp.open("GET","get_empresas/"+busca, true);
+    xmlhttp.send();
+  }
+  else{
+    document.getElementById('select_empresas').innerHTML = "digite 3 caracteres"  
+
+  }
+
+}
+
+
+function secionar_radio_empresa(element){
+
+  var busca = element.value
+  
+  document.getElementById('input_busca_empresa').value = busca;
+
+  var xmlhttp=new XMLHttpRequest();
+  
+  xmlhttp.onreadystatechange=function() {
+    document.getElementById('select_local').innerHTML = this.responseText;
+  }
+
+  xmlhttp.open("GET","get_local/"+busca, true);
+  xmlhttp.send();
+
+}
+
+function abilitar_proximo_empresa(element){
+
+  empresa = document.getElementById('input_busca_empresa').value;
+  local_empresa = document.getElementById('select_local').value;
+  
+  if (empresa!=''&& local_empresa != 'selecione'){
+    document.getElementById('bt_proximo_empresa').disabled = false  
+
+  }else{
+    document.getElementById('bt_proximo_empresa').disabled = true  
+
+  }
+
+
+}
+function busca_infracao(element){
+  
+  var busca = document.getElementById('input_busca_infracao').value 
+
+  var xmlhttp=new XMLHttpRequest();
+  
+  xmlhttp.onreadystatechange=function() {
+    document.getElementById('select_infracao').innerHTML = this.responseText;
+  }
+
+  xmlhttp.open("GET","get_infracao/"+busca, true);
+  xmlhttp.send();
+
+
+}
+
+busca_infracao();
+
+
+function secionar_radio_infracao(descricao,codigo) {
+  
+  document.getElementById('descricao').innerHTML = descricao
+  document.getElementById('input_busca_infracao').value = codigo
+    
+  document.getElementById('bt_proximo_infracao').disabled = false  
+
+
+}
+
+function input_horadata_local(element) {
+  
+  data = document.getElementById('data').value
+  hora = document.getElementById('hora').value
+  if (data != "" && hora !=""){
+
+    document.getElementById('bt_proximo_local').disabled = false  
+
+  }else{
+    document.getElementById('bt_proximo_local').disabled = true  
+
+  }
+
+
+}
+
+
+</script>
+
